@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FELIPE ANDRADE // CORE SYSTEM</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Felipe Andrade - Creative System Dashboard. Digital art, industrial design, and AI content integrations.">
+    <meta name="keywords" content="Felipe Andrade, Brutalist, Cyberpunk, 3D Design, Streetwear, AI Content, WebGL, CSS 3D">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="system-theme">
+
+    <!-- Custom Tech Cursor -->
+    <div class="custom-cursor" id="custom-cursor">
+        <div class="cursor-cross"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-label" id="cursor-label">SYS_IDLE</div>
+    </div>
+
+    <!-- Mouse Ambient Light Layer -->
+    <div class="mouse-glow-container" id="mouse-glow"></div>
+
+    <!-- Screen Overlays for CRT and Blueprint feel -->
+    <div class="grid-overlay"></div>
+    <div class="scanline-overlay"></div>
+    <div class="screen-flicker"></div>
+    <div class="vignette"></div>
+
+    <!-- Live Telemetry Status Header -->
+    <div class="telemetry-bar">
+        <div class="tel-item"><span class="tel-tag green">STATUS:</span> <span class="blink">SYSTEM_ACTIVE</span></div>
+        <div class="tel-item"><span class="tel-tag orange">NODE:</span> PORKBUN_CONNECT // SECURE</div>
+        <div class="tel-item"><span class="tel-tag blue">COORDS:</span> <span id="tel-coords">X: 000 / Y: 000</span></div>
+        <div class="tel-item"><span class="tel-tag green">UPTIME:</span> <span id="tel-uptime">00:00:00</span></div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sys-header">
+        <div class="logo-container">
+            <span class="status-indicator-dot"></span>
+            <span class="logo-text glitch" data-text="F_ANDRADE // CORE_NODE">F_ANDRADE // CORE_NODE</span>
+        </div>
+        <nav class="sys-nav">
+            <a href="#dashboard" class="nav-link active"><span class="nav-num">01_</span>DASHBOARD</a>
+            <a href="#control" class="nav-link"><span class="nav-num">02_</span>TERMINAL</a>
+            <a href="#about" class="nav-link"><span class="nav-num">03_</span>COORDINATES</a>
+        </nav>
+    </header>
+
+    <!-- Main Grid Dashboard Wrapper -->
+    <main class="dashboard-wrapper" id="dashboard">
+        
+        <!-- Welcome Banner Card -->
+        <div class="dash-card banner-card">
+            <div class="tech-lines"></div>
+            <div class="cyber-bracket top-left"></div>
+            <div class="cyber-bracket top-right"></div>
+            <div class="cyber-bracket bottom-left"></div>
+            <div class="cyber-bracket bottom-right"></div>
+            
+            <div class="card-tag">SYSTEM_INITIALIZATION</div>
+            <h1 class="glitch-title" data-text="FELIPE ANDRADE">FELIPE ANDRADE</h1>
+            <p class="subtitle">// DIGITAL ARTIST // DESIGNER // AI INTEGRATOR</p>
+            <div class="tech-stats-row">
+                <div class="stat-box">
+                    <span class="stat-num" id="stat-mem">98.4%</span>
+                    <span class="stat-label">MEM_CAPACITY</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="stat-cpu">14.2%</span>
+                    <span class="stat-label">CPU_CORE_LOAD</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num">2026.06</span>
+                    <span class="stat-label">BUILD_VER</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D CSS Cube Viewport Card (No images, pure interactive 3D CSS shape!) -->
+        <div class="dash-card vp-card card-interactive">
+            <div class="cyber-bracket top-left"></div>
+            <div class="cyber-bracket top-right"></div>
+            <div class="cyber-bracket bottom-left"></div>
+            <div class="cyber-bracket bottom-right"></div>
+            
+            <div class="card-header">
+                <span class="card-tag orange-text">MODULE_01 // 3D_SCULPT_SIM</span>
+                <span class="card-status green-glow">ACTIVE</span>
+            </div>
+            
+            <!-- 3D Transform Area -->
+            <div class="vp-viewport-container" id="3d-container">
+                <div class="vp-grid-floor"></div>
+                <div class="vp-axis">
+                    <span class="axis-line x-axis"></span>
+                    <span class="axis-line y-axis"></span>
+                    <span class="axis-line z-axis"></span>
+                </div>
+                
+                <!-- CSS 3D Cube -->
+                <div class="css-3d-cube" id="cube-3d">
+                    <div class="cube-face face-front">01</div>
+                    <div class="cube-face face-back">02</div>
+                    <div class="cube-face face-left">03</div>
+                    <div class="cube-face face-right">04</div>
+                    <div class="cube-face face-top">05</div>
+                    <div class="cube-face face-bottom">06</div>
+                </div>
+                
+                <div class="vp-overlay-instruct">[ DRAG TO ROTATE 3D WIREFRAME ]</div>
+            </div>
+
+            <div class="card-footer">
+                <span class="footer-lbl">RENDER_SYS: CSS_3D_ENGINE</span>
+                <span class="footer-lbl" id="vp-rot-display">ROT: X: 0° / Y: 0°</span>
+            </div>
+        </div>
+
+        <!-- Molebot Spec Card (Dial gauges, specs, progress bars) -->
+        <div class="dash-card spec-card card-interactive">
+            <div class="cyber-bracket top-left"></div>
+            <div class="cyber-bracket top-right"></div>
+            <div class="cyber-bracket bottom-left"></div>
+            <div class="cyber-bracket bottom-right"></div>
+            
+            <div class="card-header">
+                <span class="card-tag">MODULE_02 // MOLEBOTS_TELEMETRY</span>
+                <span class="card-status orange-glow">MONITORING</span>
+            </div>
+
+            <div class="spec-card-body">
+                <div class="telemetry-gauge-container">
+                    <div class="gauge-ring">
+                        <div class="gauge-spinner" id="gauge-spin"></div>
+                        <div class="gauge-value" id="gauge-val">65.0</div>
+                    </div>
+                    <div class="gauge-info">
+                        <div class="info-title">GRINDER_RPM</div>
+                        <div class="info-status green">OPTIMAL</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar-stack">
+                    <div class="progress-item">
+                        <div class="progress-labels">
+                            <span>EXTRUSION_FLOW</span>
+                            <span id="flow-val">96.8%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="flow-fill" style="width: 96.8%;"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-labels">
+                            <span>LAYER_RESOLUTION</span>
+                            <span>0.12MM</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill orange" style="width: 85%;"></div></div>
+                    </div>
+                </div>
+
+                <ul class="telemetry-list">
+                    <li><span>FAB_STATUS:</span> <span class="green">PRINTING</span></li>
+                    <li><span>FILAMENT:</span> <span>PLA-PRO // GLOW_GREEN</span></li>
+                    <li><span>TARGET:</span> <span>MOLEBOTS_V1.2</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Apparel Drop Code Grid Card -->
+        <div class="dash-card apparel-card card-interactive">
+            <div class="cyber-bracket top-left"></div>
+            <div class="cyber-bracket top-right"></div>
+            <div class="cyber-bracket bottom-left"></div>
+            <div class="cyber-bracket bottom-right"></div>
+            
+            <div class="card-header">
+                <span class="card-tag blue-text">MODULE_03 // MENTIRAMENTIRA</span>
+                <span class="card-status font-bold">RELEASE_04</span>
+            </div>
+
+            <div class="apparel-card-body">
+                <div class="lookbook-vector-box">
+                    <div class="vector-crosshairs"></div>
+                    <div class="vector-circle animate-pulse"></div>
+                    <div class="vector-scan-line"></div>
+                    <div class="vector-text">MM_SYS_DROP.bin</div>
+                </div>
+
+                <div class="catalog-grid">
+                    <div class="catalog-row header-row">
+                        <span>ITEM_ID</span><span>DESC</span><span>STOCK</span>
+                    </div>
+                    <div class="catalog-row">
+                        <span>MM_01</span><span>OVER_HOODIE</span><span class="red-text">SOLD_OUT</span>
+                    </div>
+                    <div class="catalog-row">
+                        <span>MM_02</span><span>CARGO_PANT</span><span class="green-glow">08_LEFT</span>
+                    </div>
+                    <div class="catalog-row">
+                        <span>MM_03</span><span>GRAPHIC_TEE</span><span class="green-glow">15_LEFT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive AI Prompt Terminal Card -->
+        <div class="dash-card terminal-card" id="control">
+            <div class="cyber-bracket top-left"></div>
+            <div class="cyber-bracket top-right"></div>
+            <div class="cyber-bracket bottom-left"></div>
+            <div class="cyber-bracket bottom-right"></div>
+            
+            <div class="card-header">
+                <span class="card-tag">MODULE_04 // AI_CONTENT_TERMINAL</span>
+                <span class="card-status blink">CONNECTING</span>
+            </div>
+
+            <div class="term-body" id="term-console">
+                <div class="term-log-line green-text">[INITIALIZING AI CONTENT AGENT PIPELINE...]</div>
+                <div class="term-log-line">[SYSTEM] READY TO DEPLOY SYNTHETIC WRITING AGENTS.</div>
+                
+                <div class="term-input-line">
+                    <span class="prompt-sign">&gt;</span>
+                    <span id="term-typewriter"></span>
+                    <span class="term-cursor blink">_</span>
+                </div>
+                
+                <div class="term-compiling hidden" id="term-compiling">
+                    <div class="term-progress-outer">
+                        <div class="term-progress-inner" id="term-bar-fill"></div>
+                    </div>
+                    <div class="term-log-line yellow-text" id="term-compile-status">[AGENTS RUNNING] COMPILING BRAND ESSENCE...</div>
+                </div>
+
+                <div class="term-results hidden" id="term-results">
+                    <div class="result-block">
+                        "UNCONVENTIONAL FORM. MECHANICAL TRUTH. APPAREL AND GRINDERS AREN'T JUST PRODUCTS, THEY'RE SYNTHETIC MEDIA STATIONS FOR BRANDS IN THE MATRIX."
+                    </div>
+                    <button class="btn btn-tiny" id="btn-reboot">REBOOT_PIPELINE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Encrypted Message / Contact Portal -->
+        <div class="dash-card contact-card" id="about">
+            <div class="cyber-bracket top-left"></div>
+            <div class="cyber-bracket top-right"></div>
+            <div class="cyber-bracket bottom-left"></div>
+            <div class="cyber-bracket bottom-right"></div>
+            
+            <div class="card-header">
+                <span class="card-tag">MODULE_05 // DIRECT_COMMUNICATIONS</span>
+                <span class="card-status">SECURED</span>
+            </div>
+
+            <form class="secure-form" id="secure-contact">
+                <div class="form-row">
+                    <div class="input-wrap">
+                        <label>SENDER_ID</label>
+                        <input type="text" id="sender-id" required placeholder="E.G., BRAND_X">
+                    </div>
+                    <div class="input-wrap">
+                        <label>SENDER_NODE_EMAIL</label>
+                        <input type="email" id="sender-email" required placeholder="E.G., NAME@DOMAIN.COM">
+                    </div>
+                </div>
+                <div class="input-wrap">
+                    <label>PAYLOAD_BRIEF</label>
+                    <textarea id="payload" required rows="4" placeholder="DECRYPT YOUR ENCRYPTED MSG HERE..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block glow-btn">
+                    <span>EXECUTE_TRANSMISSION</span>
+                </button>
+                <div id="tx-status" class="tx-status hidden"></div>
+            </form>
+        </div>
+
+    </main>
+
+    <!-- System Footer -->
+    <footer class="sys-footer">
+        <div class="footer-item">CORE_SYS: ONLINE // 2026</div>
+        <div class="footer-item">LOC: LATITUDE: 40.7128° N, LONGITUDE: 74.0060° W</div>
+        <div class="footer-item">HOSTING: PORKBUN_CONNECT // DEPLOY: GITHUB_PAGES</div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
