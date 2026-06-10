@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const status = card.getAttribute("data-status");
             const iterations = card.getAttribute("data-iterations");
             const imgPath = card.getAttribute("data-img");
-            const pagePath = card.getAttribute("data-page");
+            currentPanelId = card.getAttribute("data-panel");
 
             // Update Featured Artifact Panel details
             if (featuredTitle) featuredTitle.textContent = title;
@@ -107,11 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 featuredStatus.className = "val " + (status === "PRODUCTION" || status === "ONLINE" ? "green-text" : "cyan-text");
             }
             if (featuredIterations) featuredIterations.textContent = iterations;
-            
-            // Dynamically update link target for Featured Project Button
-            if (featuredViewBtn && pagePath) {
-                featuredViewBtn.setAttribute("href", pagePath);
-            }
 
             // Update Featured Image Viewport with snappy digital fade transition
             if (featuredImg && imgPath) {
@@ -128,8 +123,67 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- 4. VIEW PROJECT DETAIL PANELS ROUTED TO DEDICATED HTML PAGES ---
-    // (Old slide-out panel DOM event listeners removed for standard navigation flow)
+    // --- 4. VIEW PROJECT DETAIL MODAL TOGGLES (Escape / Outside Click close) ---
+    const backdrop = document.getElementById("modal-backdrop");
+    const closeButtons = document.querySelectorAll(".panel-close-btn");
+
+    function openModal(panelId) {
+        const targetPanel = document.getElementById(panelId);
+        if (targetPanel) {
+            targetPanel.classList.add("open");
+            if (backdrop) backdrop.classList.add("open");
+            document.body.style.overflow = "hidden"; // lock page scroll
+            
+            // If it is the AI console panel, trigger typewriter typing
+            if (panelId === "panel-ai") {
+                setTimeout(runTerminalTypewriter, 300);
+            }
+        }
+    }
+
+    function closeAllModals() {
+        const activeModals = document.querySelectorAll(".detail-panel.open");
+        activeModals.forEach(modal => modal.classList.remove("open"));
+        if (backdrop) backdrop.classList.remove("open");
+        document.body.style.overflow = ""; // restore page scroll
+    }
+
+    // Trigger open from Featured Project Button click
+    if (featuredViewBtn) {
+        featuredViewBtn.addEventListener("click", () => {
+            if (currentPanelId) openModal(currentPanelId);
+        });
+    }
+
+    // Connect nav sidebar links to modals
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            const targetAttr = item.getAttribute("href");
+            if (targetAttr && targetAttr.startsWith("#")) {
+                e.preventDefault();
+                const targetId = targetAttr.substring(1);
+                openModal(targetId);
+            }
+        });
+    });
+
+    // Close on native ESC_MODULE button click
+    closeButtons.forEach(btn => {
+        btn.addEventListener("click", closeAllModals);
+    });
+
+    // Close on clicking backdrop (outside modal card)
+    if (backdrop) {
+        backdrop.addEventListener("click", closeAllModals);
+    }
+
+    // Close on pressing Escape key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeAllModals();
+        }
+    });
 
     // --- 7. TELEMETRY STATUS DATA FLUCTUATIONS ---
     const flowDisplay = document.getElementById("flow-val");
