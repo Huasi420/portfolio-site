@@ -71,56 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, loaderIntervalTime);
 
-    // --- 2. FUTURISTIC CUSTOM CURSOR & AMBIENT COORDINATES ---
-    const customCursor = document.getElementById("custom-cursor");
-    const cursorDot = document.querySelector(".cursor-dot");
-    const cursorRing = document.querySelector(".cursor-ring");
-    const cursorLabel = document.getElementById("cursor-label");
-    const telCoords = document.getElementById("tel-coords");
-    
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-    
-    document.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        // Move inner dot instantly
-        if (cursorDot) {
-            cursorDot.style.left = `${mouseX}px`;
-            cursorDot.style.top = `${mouseY}px`;
-        }
-    });
 
-    // Smooth cursor trailing ring
-    function updateCursorRing() {
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        
-        if (cursorRing) {
-            cursorRing.style.left = `${ringX}px`;
-            cursorRing.style.top = `${ringY}px`;
-        }
-        
-        requestAnimationFrame(updateCursorRing);
-    }
-    updateCursorRing();
-
-    // Scale cursor hover states
-    function addHoverListeners() {
-        const interactables = document.querySelectorAll("a, button, input, textarea, .card-interactive, .featured-viewport-container, .panel-close-btn");
-        interactables.forEach(el => {
-            el.addEventListener("mouseenter", () => {
-                if (customCursor) customCursor.classList.add("active");
-                if (cursorLabel) cursorLabel.textContent = "SYS_HOVER";
-            });
-            el.addEventListener("mouseleave", () => {
-                if (customCursor) customCursor.classList.remove("active");
-                if (cursorLabel) cursorLabel.textContent = "SYS_IDLE";
-            });
-        });
-    }
-    addHoverListeners();
 
     // --- 3. DYNAMIC INTERACTIVE GALLERY PROJECT SWITCHER ---
     const galleryCards = document.querySelectorAll(".gallery-card");
@@ -129,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const featuredStatus = document.getElementById("featured-status");
     const featuredIterations = document.getElementById("featured-iterations");
     const featuredViewBtn = document.getElementById("featured-view-btn");
-    const cube3d = document.getElementById("cube-3d");
+    const featuredImg = document.getElementById("featured-img");
 
     // Track active panel ID
     let currentPanelId = "panel-molebots";
@@ -145,270 +96,40 @@ document.addEventListener("DOMContentLoaded", () => {
             const subtitle = card.getAttribute("data-subtitle");
             const status = card.getAttribute("data-status");
             const iterations = card.getAttribute("data-iterations");
-            currentPanelId = card.getAttribute("data-panel");
+            const imgPath = card.getAttribute("data-img");
+            const pagePath = card.getAttribute("data-page");
 
             // Update Featured Artifact Panel details
             if (featuredTitle) featuredTitle.textContent = title;
             if (featuredSubtitle) featuredSubtitle.textContent = subtitle;
             if (featuredStatus) {
                 featuredStatus.textContent = status;
-                // Change status color based on text
                 featuredStatus.className = "val " + (status === "PRODUCTION" || status === "ONLINE" ? "green-text" : "cyan-text");
             }
             if (featuredIterations) featuredIterations.textContent = iterations;
-
-            // Trigger a quick spin effect on the 3D cube model as a transition indicator
-            if (cube3d) {
-                cube3d.style.transition = "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
-                cube3d.style.transform = "rotateX(360deg) rotateY(360deg)";
-                setTimeout(() => {
-                    cube3d.style.transition = "transform 0.1s ease-out";
-                    rotX = -25; rotY = 45;
-                    cube3d.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-                }, 600);
+            
+            // Dynamically update link target for Featured Project Button
+            if (featuredViewBtn && pagePath) {
+                featuredViewBtn.setAttribute("href", pagePath);
             }
-        });
-    });
 
-    // --- 4. VIEW PROJECT DETAIL PANEL TOGGLES ---
-    const detailPanels = document.querySelectorAll(".detail-panel");
-    const closeButtons = document.querySelectorAll(".panel-close-btn");
-
-    // Open Panel from Featured Card view button
-    if (featuredViewBtn) {
-        featuredViewBtn.addEventListener("click", () => {
-            const targetPanel = document.getElementById(currentPanelId);
-            if (targetPanel) {
-                targetPanel.classList.add("open");
-                document.body.style.overflow = "hidden"; // lock page scroll
+            // Update Featured Image Viewport with snappy digital fade transition
+            if (featuredImg && imgPath) {
+                featuredImg.style.transition = "opacity 0.15s cubic-bezier(0.2, 0, 0.2, 1), transform 0.15s cubic-bezier(0.2, 0, 0.2, 1)";
+                featuredImg.style.opacity = "0.1";
+                featuredImg.style.transform = "scale(0.96) translate3d(0,0,0)";
                 
-                // If it is the AI console panel, trigger typewriter typing
-                if (currentPanelId === "panel-ai") {
-                    setTimeout(runTerminalTypewriter, 300);
-                }
-            }
-        });
-    }
-
-    // Connect nav sidebar links to overlay panels
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach(item => {
-        item.addEventListener("click", (e) => {
-            const targetAttr = item.getAttribute("href");
-            
-            // Check if nav item targets a specific detail panel
-            let panelTarget = null;
-            if (targetAttr.includes("card-molebots")) {
-                panelTarget = document.getElementById("panel-molebots");
-            } else if (targetAttr.includes("card-sculpt")) {
-                panelTarget = document.getElementById("panel-sculpt");
-            } else if (targetAttr.includes("card-ai")) {
-                panelTarget = document.getElementById("panel-ai");
-            } else if (targetAttr.includes("secure-contact")) {
-                panelTarget = document.getElementById("panel-contact");
-            }
-
-            if (panelTarget) {
-                e.preventDefault();
-                panelTarget.classList.add("open");
-                document.body.style.overflow = "hidden";
-                if (panelTarget.id === "panel-ai") {
-                    setTimeout(runTerminalTypewriter, 300);
-                }
+                setTimeout(() => {
+                    featuredImg.src = imgPath;
+                    featuredImg.style.opacity = "1";
+                    featuredImg.style.transform = "scale(1) translate3d(0,0,0)";
+                }, 150);
             }
         });
     });
 
-    // Close any active panel
-    closeButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            detailPanels.forEach(panel => panel.classList.remove("open"));
-            document.body.style.overflow = ""; // restore page scroll
-        });
-    });
-
-    // --- 5. 3D CUBE DRAG ROTATION MECHANICS ---
-    
-    // VIEWPORT A: FEATURED PANEL VIEWPORT
-    const container3d = document.getElementById("3d-container");
-    const rotDisplay = document.getElementById("vp-rot-display");
-    
-    let isDragging = false;
-    let startX = 0, startY = 0;
-    let rotX = -25; // initial tilt
-    let rotY = 45;  // initial angle
-    let autoRotActive = true;
-
-    if (container3d && cube3d) {
-        container3d.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            autoRotActive = false;
-            startX = e.clientX;
-            startY = e.clientY;
-            
-            const instruct = container3d.querySelector(".vp-overlay-instruct");
-            if (instruct) instruct.style.opacity = "0.1";
-        });
-
-        document.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            
-            const deltaX = e.clientX - startX;
-            const deltaY = e.clientY - startY;
-            
-            rotY += deltaX * 0.5;
-            rotX -= deltaY * 0.5;
-            
-            rotX = Math.max(-85, Math.min(85, rotX)); // clamp tilt
-            cube3d.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-            
-            if (rotDisplay) {
-                rotDisplay.textContent = `ROT: X: ${Math.round(rotX)}° / Y: ${Math.round(rotY)}°`;
-            }
-            
-            startX = e.clientX;
-            startY = e.clientY;
-        });
-
-        document.addEventListener("mouseup", () => {
-            if (isDragging) {
-                isDragging = false;
-                setTimeout(() => { if (!isDragging) autoRotActive = true; }, 3000);
-            }
-        });
-    }
-
-    // Auto rotate featured cube when idle
-    function autoRotateCube() {
-        if (autoRotActive && cube3d && !isDragging) {
-            rotY += 0.35;
-            cube3d.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-            if (rotDisplay) {
-                rotDisplay.textContent = `ROT: X: ${Math.round(rotX)}° / Y: ${Math.round(rotY)}°`;
-            }
-        }
-        requestAnimationFrame(autoRotateCube);
-    }
-    autoRotateCube();
-
-    // VIEWPORT B: PANEL SCULPT DETAIL VIEWPORT
-    const cube3dSculpt = document.getElementById("cube-3d-sculpt");
-    const container3dSculpt = document.getElementById("3d-container-sculpt");
-    const rotDisplaySculpt = document.getElementById("vp-rot-display-sculpt");
-    
-    let isDraggingSculpt = false;
-    let startXSculpt = 0, startYSculpt = 0;
-    let rotXSculpt = -25, rotYSculpt = 45;
-    let autoRotSculpt = true;
-
-    if (container3dSculpt && cube3dSculpt) {
-        container3dSculpt.addEventListener("mousedown", (e) => {
-            isDraggingSculpt = true;
-            autoRotSculpt = false;
-            startXSculpt = e.clientX;
-            startYSculpt = e.clientY;
-        });
-
-        document.addEventListener("mousemove", (e) => {
-            if (!isDraggingSculpt) return;
-            
-            const deltaX = e.clientX - startXSculpt;
-            const deltaY = e.clientY - startYSculpt;
-            
-            rotYSculpt += deltaX * 0.5;
-            rotXSculpt -= deltaY * 0.5;
-            
-            rotXSculpt = Math.max(-85, Math.min(85, rotXSculpt));
-            cube3dSculpt.style.transform = `rotateX(${rotXSculpt}deg) rotateY(${rotYSculpt}deg)`;
-            
-            if (rotDisplaySculpt) {
-                rotDisplaySculpt.textContent = `ROT: X: ${Math.round(rotXSculpt)}° / Y: ${Math.round(rotYSculpt)}°`;
-            }
-            
-            startXSculpt = e.clientX;
-            startYSculpt = e.clientY;
-        });
-
-        document.addEventListener("mouseup", () => {
-            if (isDraggingSculpt) {
-                isDraggingSculpt = false;
-                setTimeout(() => { if (!isDraggingSculpt) autoRotSculpt = true; }, 3000);
-            }
-        });
-    }
-
-    function autoRotateCubeSculpt() {
-        if (autoRotSculpt && cube3dSculpt && !isDraggingSculpt) {
-            rotYSculpt += 0.4;
-            cube3dSculpt.style.transform = `rotateX(${rotXSculpt}deg) rotateY(${rotYSculpt}deg)`;
-            if (rotDisplaySculpt) {
-                rotDisplaySculpt.textContent = `ROT: X: ${Math.round(rotXSculpt)}° / Y: ${Math.round(rotYSculpt)}°`;
-            }
-        }
-        requestAnimationFrame(autoRotateCubeSculpt);
-    }
-    autoRotateCubeSculpt();
-
-    // --- 6. DYNAMIC 3D WIREFRAME CANVASES GRID DRAWING (STATS CARD) ---
-    const statsCanvas = document.getElementById("stats-canvas");
-    if (statsCanvas) {
-        const ctx = statsCanvas.getContext("2d");
-        let waveTime = 0;
-
-        function drawStatsMesh() {
-            // Resize canvas context boundaries dynamically to parent box
-            const parentWidth = statsCanvas.parentElement.clientWidth;
-            const parentHeight = statsCanvas.parentElement.clientHeight || 80;
-            statsCanvas.width = parentWidth;
-            statsCanvas.height = parentHeight;
-
-            ctx.clearRect(0, 0, statsCanvas.width, statsCanvas.height);
-            
-            // Draw real-time sine grid mesh
-            ctx.strokeStyle = "rgba(0, 240, 255, 0.22)";
-            ctx.lineWidth = 1;
-
-            const gridRows = 5;
-            const gridCols = 15;
-            const stepX = statsCanvas.width / (gridCols - 1);
-            const stepY = statsCanvas.height / (gridRows - 1);
-
-            // Draw horizontal rows
-            for (let r = 0; r < gridRows; r++) {
-                ctx.beginPath();
-                for (let c = 0; c < gridCols; c++) {
-                    const x = c * stepX;
-                    // distorts height coordinates using stacked math sine waves
-                    const z = Math.sin(c * 0.5 + waveTime) * Math.cos(r * 0.4 + waveTime * 0.4) * 6;
-                    const y = r * stepY + z + 8;
-                    
-                    if (c === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.stroke();
-            }
-
-            // Draw vertical columns
-            for (let c = 0; c < gridCols; c++) {
-                ctx.beginPath();
-                for (let r = 0; r < gridRows; r++) {
-                    const x = c * stepX;
-                    const z = Math.sin(c * 0.5 + waveTime) * Math.cos(r * 0.4 + waveTime * 0.4) * 6;
-                    const y = r * stepY + z + 8;
-
-                    if (r === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.stroke();
-            }
-
-            waveTime += 0.025;
-            requestAnimationFrame(drawStatsMesh);
-        }
-        
-        // Start canvas wireframe animation
-        drawStatsMesh();
-    }
+    // --- 4. VIEW PROJECT DETAIL PANELS ROUTED TO DEDICATED HTML PAGES ---
+    // (Old slide-out panel DOM event listeners removed for standard navigation flow)
 
     // --- 7. TELEMETRY STATUS DATA FLUCTUATIONS ---
     const flowDisplay = document.getElementById("flow-val");

@@ -14,20 +14,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=1.6">
+    <link rel="stylesheet" href="style.css?v=1.7">
 </head>
 <body class="glassy-theme loading-active">
 
-    <!-- Procedural Concrete Noise SVG Filter -->
-    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0">
-        <defs>
-            <filter id="concrete-noise">
-                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" result="noise" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0.1   0 0 0 0 0.1   0 0 0 0 0.1   0 0 0 0.15 0" />
-                <feBlend mode="multiply" in="SourceGraphic" in2="noise" />
-            </filter>
-        </defs>
-    </svg>
+
 
     <!-- INTRO LOADING SCREEN (Slices open horizontally, with character reveal laser sweep) -->
     <div id="loader-screen" class="loader-wrapper">
@@ -63,12 +54,7 @@
         </div>
     </div>
 
-    <!-- Custom Futuristic Cursor -->
-    <div class="custom-cursor" id="custom-cursor">
-        <div class="cursor-dot"></div>
-        <div class="cursor-ring"></div>
-        <div class="cursor-label" id="cursor-label">SYS_IDLE</div>
-    </div>
+
 
     <!-- Procedural Concrete & Grid Lines Background -->
     <div class="concrete-grid-bg">
@@ -93,25 +79,25 @@
 
             <!-- Sticky Navigation Menu -->
             <nav class="sidebar-nav">
-                <a href="#card-molebots" class="nav-item active">
+                <a href="products.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> ARCHIVE
                 </a>
-                <a href="#card-molebots" class="nav-item">
+                <a href="products.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> PRODUCTS
                 </a>
-                <a href="#card-sculpt" class="nav-item">
+                <a href="modeling.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> 3D MODELING
                 </a>
-                <a href="#card-sculpt" class="nav-item">
+                <a href="modeling.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> FILMS
                 </a>
-                <a href="#card-ai" class="nav-item">
+                <a href="lab.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> LAB
                 </a>
-                <a href="#secure-contact" class="nav-item">
+                <a href="info.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> CONNECT
                 </a>
-                <a href="#secure-contact" class="nav-item">
+                <a href="info.html" class="nav-item">
                     <span class="nav-arrow">&gt;</span> INFO
                 </a>
             </nav>
@@ -200,29 +186,13 @@
                 <p class="subtitle" id="featured-subtitle">PORTABLE MODULAR GRINDER SYSTEM</p>
             </div>
 
-            <!-- Draggable Interactive Viewport -->
-            <div class="featured-viewport-container" id="3d-container">
-                <div class="vp-grid-floor"></div>
-                <div class="vp-axis">
-                    <span class="axis-line x-axis"></span>
-                    <span class="axis-line y-axis"></span>
-                    <span class="axis-line z-axis"></span>
-                </div>
-                <div class="css-3d-cube" id="cube-3d">
-                    <div class="cube-face face-front">01</div>
-                    <div class="cube-face face-back">02</div>
-                    <div class="cube-face face-left">03</div>
-                    <div class="cube-face face-right">04</div>
-                    <div class="cube-face face-top">05</div>
-                    <div class="cube-face face-bottom">06</div>
-                </div>
-                <div class="vp-overlay-instruct">[ DRAG HUD TO ROTATE ]</div>
+            <!-- Featured Image Preview Viewport -->
+            <div class="featured-image-container">
+                <div class="viewport-scan-line"></div>
+                <img id="featured-img" src="assets/molebot.png" alt="Featured Project">
             </div>
 
             <div class="featured-viewport-footer">
-                <div class="viewport-telemetry-stats" id="vp-rot-display">
-                    ROT: X: -25° / Y: 45°
-                </div>
                 <div class="featured-specs-row">
                     <div class="spec-widget">
                         <span class="tag">STATUS:</span>
@@ -235,9 +205,9 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary btn-block glow-btn" id="featured-view-btn">
+            <a href="products.html" class="btn btn-primary btn-block glow-btn" id="featured-view-btn" style="text-decoration: none;">
                 <span>VIEW PROJECT</span>
-            </button>
+            </a>
         </section>
 
         <!-- COLUMNS 2-4: HORIZONTAL PROJECT GALLERY -->
@@ -268,7 +238,8 @@
                      data-subtitle="PORTABLE MODULAR GRINDER SYSTEM" 
                      data-status="PRODUCTION" 
                      data-iterations="23"
-                     data-panel="panel-molebots">
+                     data-img="assets/molebot.png"
+                     data-page="products.html">
                     <div class="card-banner-img" style="background-image: url('assets/molebot.png');">
                         <div class="card-img-hud">[ FDM_PRINTED ]</div>
                     </div>
@@ -285,7 +256,8 @@
                      data-subtitle="3D RIGGED CINEMATIC PROP" 
                      data-status="RENDERING" 
                      data-iterations="09"
-                     data-panel="panel-sculpt">
+                     data-img="assets/mech.png"
+                     data-page="modeling.html">
                     <div class="card-banner-img" style="background-image: url('assets/mech.png');">
                         <div class="card-img-hud">[ SUBDIV_MESH ]</div>
                     </div>
@@ -302,7 +274,8 @@
                      data-subtitle="COMPUTATIONAL FASHION DROP" 
                      data-status="EVALUATING" 
                      data-iterations="15"
-                     data-panel="panel-ai">
+                     data-img="assets/apparel.png"
+                     data-page="lab.html">
                     <div class="card-banner-img" style="background-image: url('assets/apparel.png');">
                         <div class="card-img-hud">[ MENTIRAMENTIRA ]</div>
                     </div>
@@ -319,7 +292,8 @@
                      data-subtitle="CINEMATIC HARD-SURFACE SCENE" 
                      data-status="COMPILING" 
                      data-iterations="12"
-                     data-panel="panel-sculpt">
+                     data-img="assets/mech.png"
+                     data-page="modeling.html">
                     <div class="card-banner-img" style="background-image: url('assets/mech.png'); filter: hue-rotate(90deg);">
                         <div class="card-img-hud">[ VFX_COMP ]</div>
                     </div>
@@ -336,7 +310,8 @@
                      data-subtitle="POINT CLOUD PHOTOGRAMMETRY" 
                      data-status="PROCESSING" 
                      data-iterations="04"
-                     data-panel="panel-sculpt">
+                     data-img="assets/molebot.png"
+                     data-page="modeling.html">
                     <div class="card-banner-img" style="background-image: url('assets/molebot.png'); filter: invert(1) grayscale(1);">
                         <div class="card-img-hud">[ 3D_SCAN ]</div>
                     </div>
@@ -353,7 +328,8 @@
                      data-subtitle="HEADLESS DEPLOYMENT AND BRAND APPAREL" 
                      data-status="ONLINE" 
                      data-iterations="02"
-                     data-panel="panel-ai">
+                     data-img="assets/apparel.png"
+                     data-page="lab.html">
                     <div class="card-banner-img" style="background-image: url('assets/apparel.png'); filter: saturate(0.2);">
                         <div class="card-img-hud">[ E-COMMERCE ]</div>
                     </div>
@@ -444,9 +420,12 @@
                         <span class="val cyan-text">250K+</span>
                     </div>
                 </div>
-                <!-- Dynamic 3D wireframe plot Canvas -->
-                <div class="stats-canvas-container">
-                    <canvas id="stats-canvas"></canvas>
+                <!-- Static SVG Terrain Telemetry Wireframe -->
+                <div class="stats-svg-container">
+                    <svg viewBox="0 0 100 40" width="100%" height="100%">
+                        <path d="M 0,35 Q 10,25 20,32 T 40,20 T 60,30 T 80,15 T 100,28 L 100,40 L 0,40 Z" fill="rgba(0, 240, 255, 0.04)" stroke="var(--accent-cyan)" stroke-width="0.75" />
+                        <path d="M 0,38 Q 15,30 30,35 T 60,25 T 90,32 L 100,38" fill="none" stroke="var(--accent-purple)" stroke-width="0.5" stroke-dasharray="2,2" />
+                    </svg>
                 </div>
             </div>
         </section>
@@ -480,215 +459,8 @@
 
     </div>
 
-    <!-- ==========================================================================
-         HORIZONTAL SLIDE-OUT DETAIL PANELS (Glass overlay panels)
-         ========================================================================== -->
+    <!-- Inline detail panels removed and migrated to dedicated HTML pages -->
 
-    <!-- PANEL A: MOLEBOTS -->
-    <div class="detail-panel glass-card" id="panel-molebots">
-        <button class="panel-close-btn" id="close-molebots">[ ESC_MODULE ]</button>
-        <div class="panel-scroll-container">
-            <div class="panel-section-header">
-                <h2>01 / MOLEBOX V7 TELEMETRY</h2>
-                <div class="header-bar"></div>
-            </div>
-
-            <div class="panel-grid">
-                <div class="panel-left-content">
-                    <div class="telemetry-gauge-container">
-                        <div class="gauge-ring">
-                            <div class="gauge-spinner"></div>
-                            <div class="gauge-value" id="gauge-val">65.0</div>
-                        </div>
-                        <div class="gauge-info">
-                            <div class="info-title">GRINDER_RPM</div>
-                            <div class="info-status">OPTIMAL</div>
-                        </div>
-                    </div>
-
-                    <div class="progress-bar-stack">
-                        <div class="progress-item">
-                            <div class="progress-labels">
-                                <span>EXTRUSION_FLOW</span>
-                                <span id="flow-val">96.8%</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" id="flow-fill" style="width: 96.8%;"></div></div>
-                        </div>
-                        <div class="progress-item">
-                            <div class="progress-labels">
-                                <span>LAYER_RESOLUTION</span>
-                                <span>0.12MM</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel-right-content">
-                    <h3 class="panel-title">GEOMETRIC FDM DESIGN</h3>
-                    <p class="panel-desc">
-                        A viral direct-to-consumer case study. By integrating raw computational geometries with modular interlocking components, Molebots grinders redefined visual accessories across social platforms.
-                    </p>
-                    <ul class="telemetry-list-vertical">
-                        <li><strong>FABRICATOR:</strong> <span>FDM MULTI-EXTRUDER</span></li>
-                        <li><strong>PLA TOUGHNESS:</strong> <span>PLA-PRO REINFORCED</span></li>
-                        <li><strong>GEOMETRY:</strong> <span>DUAL INTERLOCK MODULE</span></li>
-                        <li><strong>SALES:</strong> <span>DIRECT TO CONSUMER // VIRAL</span></li>
-                    </ul>
-                    <a href="https://instagram.com" target="_blank" rel="noopener" class="btn btn-primary glow-btn">
-                        <span>EXPLORE MOLEBOTS SOCIALS</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANEL B: Mech Helmet / Sculpting -->
-    <div class="detail-panel glass-card" id="panel-sculpt">
-        <button class="panel-close-btn" id="close-sculpt">[ ESC_MODULE ]</button>
-        <div class="panel-scroll-container">
-            <div class="panel-section-header">
-                <h2>02 / MECH_HELMET VIEWPORT</h2>
-                <div class="header-bar"></div>
-            </div>
-
-            <div class="panel-grid">
-                <div class="panel-left-content">
-                    <!-- 3D CSS Wireframe cube simulation -->
-                    <div class="vp-viewport-container" id="3d-container-sculpt">
-                        <div class="vp-grid-floor"></div>
-                        <div class="vp-axis">
-                            <span class="axis-line x-axis"></span>
-                            <span class="axis-line y-axis"></span>
-                            <span class="axis-line z-axis"></span>
-                        </div>
-                        <div class="css-3d-cube" id="cube-3d-sculpt">
-                            <div class="cube-face face-front">01</div>
-                            <div class="cube-face face-back">02</div>
-                            <div class="cube-face face-left">03</div>
-                            <div class="cube-face face-right">04</div>
-                            <div class="cube-face face-top">05</div>
-                            <div class="cube-face face-bottom">06</div>
-                        </div>
-                        <div class="vp-overlay-instruct">[ DRAG TO ROTATE 3D HUD ]</div>
-                    </div>
-                    <div class="viewport-telemetry-stats" id="vp-rot-display-sculpt">
-                        ROT: X: 0° / Y: 0°
-                    </div>
-                </div>
-
-                <div class="panel-right-content">
-                    <h3 class="panel-title">HARD-SURFACE WEAPONS & MECHS</h3>
-                    <p class="panel-desc">
-                        Designing visual components for AAA cinematic VFX pipelines. My work involves mechanical concept logic, rigging assemblies, and detailed wear texturing.
-                    </p>
-                    <ul class="telemetry-list-vertical">
-                        <li><strong>SOFTWARE:</strong> <span>ZBRUSH / BLENDER / SUBSTANCE</span></li>
-                        <li><strong>TRIGGERS:</strong> <span>RIGGED SYSTEMS ACTIVE</span></li>
-                        <li><strong>TOPOLOGY:</strong> <span>QUAD-OPTIMIZED SUBDIVS</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PANEL C: Streetwear / AI -->
-    <div class="detail-panel glass-card" id="panel-ai">
-        <button class="panel-close-btn" id="close-ai">[ ESC_MODULE ]</button>
-        <div class="panel-scroll-container">
-            <div class="panel-section-header">
-                <h2>03 / AI CONTENT ENGINE</h2>
-                <div class="header-bar"></div>
-            </div>
-
-            <div class="panel-grid">
-                <div class="panel-left-content">
-                    <div class="term-body" id="term-console">
-                        <div class="term-log-line green-text">[INITIALIZING AI CONTENT AGENT PIPELINE...]</div>
-                        <div class="term-log-line">[SYSTEM] READY TO DEPLOY SYNTHETIC WRITING AGENTS.</div>
-                        <div class="term-input-line">
-                            <span class="prompt-sign">&gt;</span>
-                            <span id="term-typewriter"></span>
-                            <span class="term-cursor blink">_</span>
-                        </div>
-                        <div class="term-compiling hidden" id="term-compiling">
-                            <div class="term-progress-outer">
-                                <div class="term-progress-inner" id="term-bar-fill"></div>
-                            </div>
-                            <div class="term-log-line yellow-text" id="term-compile-status">[AGENTS RUNNING] COMPILING BRAND ESSENCE...</div>
-                        </div>
-                        <div class="term-results hidden" id="term-results">
-                            <div class="result-block">
-                                "UNCONVENTIONAL FORM. MECHANICAL TRUTH. APPAREL AND GRINDERS AREN'T JUST PRODUCTS, THEY'RE SYNTHETIC MEDIA STATIONS FOR BRANDS IN THE MATRIX."
-                            </div>
-                            <button class="btn btn-tiny" id="btn-reboot">REBOOT PIPELINE</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel-right-content">
-                    <h3 class="panel-title">SYNTHETIC MEDIA AGENTS</h3>
-                    <p class="panel-desc">
-                        Creating scalable content generation models for digital entrepreneurs. Fusing stable diffusion, custom LLM agents, and high-contrast UI parameters.
-                    </p>
-                    <ul class="telemetry-list-vertical">
-                        <li><strong>MODELS:</strong> <span>MIDJOURNEY / FLUX / GPT-AGENTS</span></li>
-                        <li><strong>PIPELINES:</strong> <span>AUTOMATED CONTENT COMPILE</span></li>
-                        <li><strong>REACH:</strong> <span>TIKTOK / INSTAGRAM OPTIMIZED</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contact Portal Overlay -->
-    <div class="detail-panel glass-card" id="panel-contact">
-        <button class="panel-close-btn" id="close-contact">[ ESC_MODULE ]</button>
-        <div class="panel-scroll-container">
-            <div class="panel-section-header">
-                <h2>ESTABLISH COMMUNICATIONS</h2>
-                <div class="header-bar"></div>
-            </div>
-            
-            <div class="panel-grid">
-                <div class="panel-left-content">
-                    <form class="secure-form" id="secure-contact">
-                        <div class="form-row">
-                            <div class="input-wrap">
-                                <label>SENDER_ID</label>
-                                <input type="text" id="sender-id" required placeholder="YOUR NAME OR BRAND">
-                            </div>
-                            <div class="input-wrap">
-                                <label>EMAIL NODE</label>
-                                <input type="email" id="sender-email" required placeholder="CONTACT@EMAIL.COM">
-                            </div>
-                        </div>
-                        <div class="input-wrap">
-                            <label>TRANSMISSION BRIEF</label>
-                            <textarea id="payload" required rows="4" placeholder="DESCRIBE YOUR CO-DESIGN PROJECT DATA..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block glow-btn">
-                            <span>EXECUTE TRANSMISSION</span>
-                        </button>
-                        <div id="tx-status" class="tx-status hidden"></div>
-                    </form>
-                </div>
-                
-                <div class="panel-right-content">
-                    <h3 class="panel-title">DIRECT ROUTING NODES</h3>
-                    <p class="panel-desc">
-                        Deploy secure payload transmissions. Your digital assets are routed directly to the development pipeline.
-                    </p>
-                    <ul class="telemetry-list-vertical">
-                        <li><strong>EMAIL:</strong> <span>felipe@felipeandrade.xyz</span></li>
-                        <li><strong>SECURE_DNS:</strong> <span>PORKBUN Connect</span></li>
-                        <li><strong>HOSTING_TARGET:</strong> <span>GitHub Pages // HTTPS</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js?v=1.6"></script>
+    <script src="app.js?v=1.7"></script>
 </body>
 </html>
