@@ -173,10 +173,19 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", closeAllModals);
     });
 
-    // Close on clicking backdrop (outside modal card)
-    if (backdrop) {
-        backdrop.addEventListener("click", closeAllModals);
-    }
+    // Robust outside-click handler
+    document.addEventListener("click", (e) => {
+        const activeModal = document.querySelector(".detail-panel.open");
+        if (activeModal) {
+            const clickedInside = activeModal.contains(e.target);
+            const clickedTrigger = e.target.closest(".card-interactive") || 
+                                   e.target.closest(".nav-item") || 
+                                   e.target.closest("#featured-view-btn");
+            if (!clickedInside && !clickedTrigger) {
+                closeAllModals();
+            }
+        }
+    });
 
     // Close on pressing Escape key
     document.addEventListener("keydown", (e) => {
