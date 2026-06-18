@@ -20,13 +20,25 @@ interface RadialMenuProps {
 export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme }: RadialMenuProps) {
   if (isMobile) {
     return (
-      <div className="mobile-menu" style={{ padding: '6rem 2rem 2rem 2rem', zIndex: 10, position: 'relative' }}>
+      <div className="mobile-menu" style={{ 
+        padding: '6rem 1.5rem 6rem 1.5rem', 
+        zIndex: 10, 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        height: '100%', 
+        overflowY: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        boxSizing: 'border-box'
+      }}>
         {MENU_ITEMS.map((item, idx) => {
           const isActive = idx === activeIndex
           return (
             <div key={item.id} className="mobile-menu-item" style={{ marginBottom: '2rem' }}>
               <div 
                 className={`mobile-title ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveIndex(idx)}
                 style={{
                   borderLeft: `3px solid ${isActive ? 'var(--accent-color)' : 'transparent'}`,
                   paddingLeft: '1rem',
@@ -46,7 +58,7 @@ export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme 
                   border: activeTheme === 'analog' ? '1px solid rgba(120, 109, 95, 0.4)' : '2px solid var(--accent-color)',
                   backgroundColor: 'var(--panel-bg)'
                 }}>
-                  <ContentPanel idx={idx} />
+                  <ContentPanel idx={idx} isMobile={isMobile} />
                 </div>
               )}
             </div>
@@ -105,7 +117,7 @@ export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme 
                 <div className="analog-tape" style={{ bottom: '-10px', right: '-20px', transform: 'rotate(45deg)', zIndex: 10 }} />
               </>
             )}
-            <ContentPanel idx={activeIndex} />
+            <ContentPanel idx={activeIndex} isMobile={isMobile} />
           </motion.div>
         </AnimatePresence>
       </div>

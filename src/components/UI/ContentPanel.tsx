@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 interface ContentPanelProps {
   idx: number
+  isMobile?: boolean
 }
 
-export function ContentPanel({ idx }: ContentPanelProps) {
+export function ContentPanel({ idx, isMobile = false }: ContentPanelProps) {
   const [selectedProject, setSelectedProject] = useState<any | null>(null)
 
   // Select theme based on active index
@@ -504,11 +505,13 @@ export function ContentPanel({ idx }: ContentPanelProps) {
               height: '100%',
               backgroundColor: 'var(--panel-bg)',
               zIndex: 100,
-              padding: '3rem',
+              padding: isMobile ? '1.5rem 1.5rem 2.5rem 1.5rem' : '3rem',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxSizing: 'border-box'
+              justifyContent: isMobile ? 'flex-start' : 'space-between',
+              gap: isMobile ? '1.5rem' : '0',
+              boxSizing: 'border-box',
+              overflowY: 'auto'
             }}
           >
             <div>

@@ -40,6 +40,7 @@ function App() {
 
   // Handle scroll hijacking for navigation
   const handleWheel = useCallback((e: WheelEvent) => {
+    if (isMobile) return // Disable scroll hijack on mobile
     if (isLoading) return // Block scroll while loading
     if ((window as any).isScrolling) return
     (window as any).isScrolling = true
@@ -72,7 +73,7 @@ function App() {
       <div className="scifi-hud-lines" />
 
       {/* 3D Background layer */}
-      <Scene activeIndex={activeIndex} theme={activeTheme} />
+      <Scene activeIndex={activeIndex} theme={activeTheme} isMobile={isMobile} />
 
       {/* Header with interactive dropdown */}
       <header style={{

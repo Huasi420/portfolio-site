@@ -6,6 +6,7 @@ import * as THREE from 'three'
 interface MannequinHeadProps {
   activeIndex: number
   theme: string
+  isMobile: boolean
 }
 
 const MATERIAL_CONFIGS = {
@@ -51,7 +52,7 @@ const MATERIAL_CONFIGS = {
   }
 }
 
-export function MannequinHead({ activeIndex, theme }: MannequinHeadProps) {
+export function MannequinHead({ activeIndex, theme, isMobile }: MannequinHeadProps) {
   const headRef = useRef<THREE.Group>(null)
   
   // Load the GLB model
@@ -157,9 +158,9 @@ export function MannequinHead({ activeIndex, theme }: MannequinHeadProps) {
     const idleRotY = Math.cos(time * 0.25) * 0.03
 
     // Top-left orientation: facing lower-right
-    const targetBaseY = 0.5 + (activeIndex * -0.06)
+    const targetBaseY = isMobile ? (0.2 + activeIndex * -0.04) : (0.5 + activeIndex * -0.06)
     const targetBaseZ = -0.1
-    const targetBaseX = 0.45 + (activeIndex * 0.02)
+    const targetBaseX = isMobile ? (0.2 + activeIndex * 0.02) : (0.45 + activeIndex * 0.02)
 
     // Smooth lerping of rotations
     headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, targetBaseY + idleRotY, 0.04)
@@ -197,7 +198,11 @@ export function MannequinHead({ activeIndex, theme }: MannequinHeadProps) {
   })
 
   return (
-    <group ref={headRef} position={[-2.8, 2.3, 0]} scale={[1.1, 1.1, 1.1]}>
+    <group 
+      ref={headRef} 
+      position={isMobile ? [0, 1.3, -0.5] : [-2.8, 2.3, 0]} 
+      scale={isMobile ? [0.75, 0.75, 0.75] : [1.1, 1.1, 1.1]}
+    >
       {/* Render the normalized model */}
       <primitive object={normalizedGroup} />
 

@@ -7,6 +7,7 @@ import * as THREE from 'three'
 interface SceneProps {
   activeIndex: number
   theme: string
+  isMobile: boolean
 }
 
 // Light configurations for dynamic lerping
@@ -116,7 +117,7 @@ function LightController({ theme }: { theme: string }) {
   )
 }
 
-export default function Scene({ activeIndex, theme }: SceneProps) {
+export default function Scene({ activeIndex, theme, isMobile }: SceneProps) {
   return (
     <div style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
       <Canvas camera={{ position: [0, 0, 5.5], fov: 50 }}>
@@ -125,7 +126,7 @@ export default function Scene({ activeIndex, theme }: SceneProps) {
         <Environment preset="studio" />
         
         <Suspense fallback={null}>
-          <MannequinHead activeIndex={activeIndex} theme={theme} />
+          <MannequinHead activeIndex={activeIndex} theme={theme} isMobile={isMobile} />
         </Suspense>
       </Canvas>
     </div>
