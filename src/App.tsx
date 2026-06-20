@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Scene from './components/3D/Scene'
 import { RadialMenu } from './components/UI/RadialMenu'
 import { Loader } from './components/UI/Loader'
+import { MobileLanding } from './components/UI/MobileLanding'
 import './index.css'
 
 const THEME_NAMES = [
@@ -23,8 +24,9 @@ const THEME_KEYS = [
 function App() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [mobileStarted, setMobileStarted] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(window.innerWidth >= 768)
   const totalSlices = 5
 
   const activeTheme = THEME_KEYS[activeIndex]
@@ -72,8 +74,30 @@ function App() {
       <div className="background-grid" />
       <div className="scifi-hud-lines" />
 
-      {/* 3D Background layer */}
-      <Scene activeIndex={activeIndex} theme={activeTheme} isMobile={isMobile} />
+      {/* 3D Background layer (Desktop Only) */}
+      {!isMobile && <Scene activeIndex={activeIndex} theme={activeTheme} isMobile={isMobile} />}
+
+      {/* Looping Beach Video Background (Mobile Only) */}
+      {isMobile && mobileStarted && (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          src="/assets/yeah_but_i_wanted_the_loop_ani.mp4"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+            opacity: 0.55,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
 
       {/* Header with interactive dropdown */}
       <header style={{
@@ -207,8 +231,13 @@ function App() {
         </div>
       )}
 
-      {/* Intro Loading Screen Overlay */}
-      <Loader onComplete={() => setIsLoading(false)} />
+      {/* Intro Loading Screen Overlay (Desktop Only) */}
+      {!isMobile && <Loader onComplete={() => setIsLoading(false)} />}
+
+      {/* Mobile Landing Screen Overlay */}
+      {isMobile && !mobileStarted && (
+        <MobileLanding onStart={() => setMobileStarted(true)} />
+      )}
     </div>
   )
 }
