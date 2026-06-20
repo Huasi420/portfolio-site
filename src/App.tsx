@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { RadialMenu } from './components/UI/RadialMenu'
 import { StartMenu } from './components/UI/StartMenu'
 import './index.css'
@@ -7,7 +8,42 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(-1)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [siteStarted, setSiteStarted] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const totalSlices = 5
+
+  // Initialize loop audio and cleanup on unmount
+  useEffect(() => {
+    const audio = new Audio('/assets/ambient-kingdom-beach.wav')
+    audio.loop = true
+    audioRef.current = audio
+
+    return () => {
+      audio.pause()
+      audioRef.current = null
+    }
+  }, [])
+
+  // Autoplay music once site has started (bypassing browser block on interaction)
+  useEffect(() => {
+    if (siteStarted && audioRef.current) {
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(err => console.log("Autoplay blocked:", err))
+    }
+  }, [siteStarted])
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    } else {
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(err => console.log("Audio failed to play:", err))
+    }
+  }
 
   // Handle window resize
   useEffect(() => {
@@ -56,7 +92,7 @@ function App() {
             loop
             muted
             playsInline
-            src="/assets/yeah_but_i_wanted_the_loop_ani.mp4"
+            src={isMobile ? "/assets/yeah_but_i_wanted_the_loop_ani.mp4" : "/assets/videobackground-web.mp4"}
             style={{
               position: 'absolute',
               top: 0,
@@ -163,6 +199,54 @@ function App() {
               </div>
             </div>
           )}
+
+          {/* Speaker Toggle Button */}
+          <motion.button
+            onClick={toggleMusic}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            style={{
+              position: 'absolute',
+              bottom: '2rem',
+              right: '2rem',
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              border: '1.5px solid #00f0ff',
+              backgroundColor: 'rgba(10, 75, 145, 0.45)',
+              boxShadow: '0 0 10px rgba(0, 240, 255, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              zIndex: 100,
+              backdropFilter: 'blur(5px)',
+              WebkitBackdropFilter: 'blur(5px)',
+              outline: 'none',
+              transition: 'border-color 0.35s ease, box-shadow 0.35s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = '#ffffff'
+              e.currentTarget.style.boxShadow = '0 0 18px rgba(255, 255, 255, 0.5)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '#00f0ff'
+              e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 240, 255, 0.25)'
+            }}
+          >
+            {isPlaying ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+            )}
+          </motion.button>
         </>
       )}
     </div>

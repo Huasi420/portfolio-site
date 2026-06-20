@@ -54,13 +54,33 @@ export function Slice({ item, idx, isActive, totalSlices, onSelect }: SliceProps
             transformOrigin: 'left center',
           }}
         >
+          <defs>
+            <linearGradient id={`sliceGrad-${idx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--accent-color)" stopOpacity={0} />
+              <stop offset="15%" stopColor="var(--accent-color)" stopOpacity={0} />
+              <stop offset="35%" stopColor="var(--accent-color)" stopOpacity={1} />
+              <stop offset="100%" stopColor="var(--accent-color)" stopOpacity={1} />
+            </linearGradient>
+            <linearGradient id={`fillGradActive-${idx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#00f0ff" stopOpacity={0} />
+              <stop offset="15%" stopColor="#00f0ff" stopOpacity={0} />
+              <stop offset="35%" stopColor="#00f0ff" stopOpacity={0.06} />
+              <stop offset="100%" stopColor="#00f0ff" stopOpacity={0.06} />
+            </linearGradient>
+            <linearGradient id={`fillGradInactive-${idx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity={0} />
+              <stop offset="15%" stopColor="#ffffff" stopOpacity={0} />
+              <stop offset="35%" stopColor="#ffffff" stopOpacity={0.01} />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity={0.01} />
+            </linearGradient>
+          </defs>
           <motion.polygon 
             animate={{
               points: isActive ? activePoints : inactivePoints
             }}
             transition={{ type: 'spring', stiffness: 55, damping: 18 }}
-            fill={isActive ? 'rgba(0, 240, 255, 0.06)' : 'rgba(255, 255, 255, 0.01)'}
-            stroke="var(--accent-color)"
+            fill={isActive ? `url(#fillGradActive-${idx})` : `url(#fillGradInactive-${idx})`}
+            stroke={`url(#sliceGrad-${idx})`}
             strokeWidth={isActive ? '1.5' : '0.5'}
             opacity={isActive ? 1 : 0.2}
             style={{ transition: 'fill 0.4s, stroke 0.4s, opacity 0.3s' }}
@@ -70,7 +90,7 @@ export function Slice({ item, idx, isActive, totalSlices, onSelect }: SliceProps
         {/* Text Label positioned inside the wedge */}
         <motion.div
           animate={{
-            x: isActive ? 160 : 70,
+            x: isActive ? 320 : 150,
             y: isActive ? -32 : -14, // center relative to y=150 (half of font height)
             scale: isActive ? 1.05 : 0.85,
             opacity: isActive ? 1 : 0.45
