@@ -13,7 +13,9 @@ body, html {
   overflow: hidden;
   margin: 0;
   padding: 0;
-  transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-body);
 }
 
 #root {
@@ -30,151 +32,18 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-mono);
 }
 
-/* Theme Configuration Mappings */
-
-/* 01 WORK - Cinematic World */
-.theme-cinematic {
-  --bg-color: #0c0c0d;
-  --text-primary: #ffffff;
-  --text-secondary: #8a8a8f;
-  --grid-color: rgba(212, 122, 59, 0.05);
-  --accent-color: #d47a3b;
-  --panel-bg: rgba(18, 18, 20, 0.95);
-  
-  --font-body: 'Inter', sans-serif;
-  --font-heading: 'Oswald', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  background-color: var(--bg-color);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-}
-
-/* 02 ABOUT - Analog Archive */
-.theme-analog {
-  --bg-color: #e6e3da;
-  --text-primary: #1b1b1b;
-  --text-secondary: #786d5f;
-  --grid-color: rgba(27, 27, 27, 0.04);
-  --accent-color: #786d5f;
-  --panel-bg: #fcfbf9;
-  
-  --font-body: 'Courier New', Courier, monospace;
-  --font-heading: 'Special Elite', cursive;
-  --font-mono: 'Courier New', Courier, monospace;
-  
-  background-color: var(--bg-color);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-}
-
-/* 03 PROJECTS - Sci-Fi Lab */
-.theme-scifi {
+/* Unified Theme variables */
+:root {
   --bg-color: #040a0c;
-  --text-primary: #e0f2fe;
-  --text-secondary: #0ea5a0;
-  --grid-color: rgba(14, 165, 160, 0.07);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --grid-color: rgba(255, 255, 255, 0.25);
   --accent-color: #00f0ff;
-  --panel-bg: rgba(4, 10, 12, 0.95);
+  --panel-bg: rgba(10, 75, 145, 0.45);
   
   --font-body: 'Inter', sans-serif;
   --font-heading: 'Oswald', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  
-  background-color: var(--bg-color);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-}
-
-/* 04 CONTACT - Dreamscape */
-.theme-dreamscape {
-  --bg-color: #17122b;
-  --text-primary: #f3e8ff;
-  --text-secondary: #a78bfa;
-  --grid-color: rgba(192, 132, 252, 0.04);
-  --accent-color: #c084fc;
-  --panel-bg: rgba(23, 18, 43, 0.95);
-  
-  --font-body: 'Inter', sans-serif;
-  --font-heading: 'Oswald', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  background-color: var(--bg-color);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-}
-
-/* 05 STUDIO - Clinical Minimalism */
-.theme-clinical {
-  --bg-color: #f8fafc;
-  --text-primary: #111111;
-  --text-secondary: #8a8a8a;
-  --grid-color: rgba(226, 232, 240, 0.8);
-  --accent-color: #0ea5a0;
-  --panel-bg: #ffffff;
-  
-  --font-body: 'Inter', sans-serif;
-  --font-heading: 'Oswald', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  background-color: var(--bg-color);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-}
-
-/* Interactive Background Overlay (Grid lines) */
-.background-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  transition: background-image 0.8s ease;
-  background-image: 
-    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* Analog Archive specific textures */
-.theme-analog .background-grid {
-  /* Blueprint/sketch-like overlay for analog archive */
-  background-image: 
-    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px),
-    radial-gradient(circle, rgba(0,0,0,0.01) 1px, transparent 1px);
-  background-size: 40px 40px, 40px 40px, 10px 10px;
-}
-
-/* Analog corner tape visual details */
-.analog-tape {
-  position: absolute;
-  width: 80px;
-  height: 25px;
-  background-color: rgba(210, 195, 155, 0.45);
-  transform: rotate(-35deg);
-  pointer-events: none;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-}
-
-/* Hologram CRT scanlines for Sci-Fi theme */
-.scifi-hud-lines {
-  display: none;
-}
-.theme-scifi .scifi-hud-lines {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 240, 255, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-  background-size: 100% 4px, 6px 100%;
-  opacity: 0.45;
 }
 
 /* Layout elements */

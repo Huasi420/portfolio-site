@@ -14,10 +14,9 @@ interface RadialMenuProps {
   activeIndex: number
   setActiveIndex: (idx: number) => void
   isMobile: boolean
-  activeTheme: string
 }
 
-export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme }: RadialMenuProps) {
+export function RadialMenu({ activeIndex, setActiveIndex, isMobile }: RadialMenuProps) {
   if (isMobile) {
     return (
       <div className="mobile-menu" style={{ 
@@ -38,16 +37,18 @@ export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme 
             <div key={item.id} className="mobile-menu-item" style={{ marginBottom: '2rem' }}>
               <div 
                 className={`mobile-title ${isActive ? 'active' : ''}`}
-                onClick={() => setActiveIndex(idx)}
+                onClick={() => setActiveIndex(isActive ? -1 : idx)}
                 style={{
-                  borderLeft: `3px solid ${isActive ? 'var(--accent-color)' : 'transparent'}`,
+                  borderLeft: `3px solid ${isActive ? '#00f0ff' : 'transparent'}`,
                   paddingLeft: '1rem',
-                  opacity: isActive ? 1 : 0.4,
+                  opacity: isActive ? 1 : 0.7,
                   transition: 'all 0.3s ease',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  color: '#ffffff',
+                  textShadow: '0 2px 8px rgba(0,0,0,0.5)'
                 }}
               >
-                <div className="mono" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>0{idx + 1}</div>
+                <div className="mono" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)' }}>0{idx + 1}</div>
                 <h2 style={{ fontSize: '1.8rem', margin: 0, fontFamily: 'var(--font-heading)' }}>{item.title}</h2>
               </div>
               
@@ -55,8 +56,13 @@ export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme 
                 <div style={{ 
                   marginTop: '1rem', 
                   padding: '1.5rem',
-                  border: activeTheme === 'analog' ? '1px solid rgba(120, 109, 95, 0.4)' : '2px solid var(--accent-color)',
-                  backgroundColor: 'var(--panel-bg)'
+                  backgroundColor: 'rgba(10, 75, 145, 0.45)',
+                  border: '2.5px solid rgba(255, 255, 255, 0.85)',
+                  borderRadius: '8px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  color: '#ffffff'
                 }}>
                   <ContentPanel idx={idx} isMobile={isMobile} />
                 </div>
@@ -80,7 +86,6 @@ export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme 
             idx={idx} 
             isActive={idx === activeIndex} 
             totalSlices={MENU_ITEMS.length}
-            theme={activeTheme}
             onSelect={() => setActiveIndex(idx)}
           />
         ))}
@@ -89,36 +94,33 @@ export function RadialMenu({ activeIndex, setActiveIndex, isMobile, activeTheme 
       {/* Upright Content Panel on Right Half (needs pointer events enabled to interact with scroll/links) */}
       <div style={{ pointerEvents: 'auto' }}>
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0 }}
-            animate={{ clipPath: 'inset(0 0% 0 0)', opacity: 1 }}
-            exit={{ clipPath: 'inset(0 100% 0 0)', opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              position: 'absolute',
-              top: '15vh',
-              right: '8vw',
-              width: '38vw',
-              height: '70vh',
-              backgroundColor: 'var(--panel-bg)',
-              border: activeTheme === 'analog' 
-                ? '1px solid rgba(120, 109, 95, 0.4)' 
-                : '2px solid var(--accent-color)',
-              zIndex: 40,
-              overflow: 'hidden',
-              boxShadow: activeTheme === 'analog' ? '2px 2px 15px rgba(0,0,0,0.05)' : 'none',
-            }}
-          >
-            {/* Paper details for Analog theme */}
-            {activeTheme === 'analog' && (
-              <>
-                <div className="analog-tape" style={{ top: '-10px', left: '-20px', zIndex: 10 }} />
-                <div className="analog-tape" style={{ bottom: '-10px', right: '-20px', transform: 'rotate(45deg)', zIndex: 10 }} />
-              </>
-            )}
-            <ContentPanel idx={activeIndex} isMobile={isMobile} />
-          </motion.div>
+          {activeIndex >= 0 && (
+            <motion.div
+              key={activeIndex}
+              initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0 }}
+              animate={{ clipPath: 'inset(0 0% 0 0)', opacity: 1 }}
+              exit={{ clipPath: 'inset(0 100% 0 0)', opacity: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                position: 'absolute',
+                top: '15vh',
+                right: '8vw',
+                width: '38vw',
+                height: '70vh',
+                backgroundColor: 'rgba(10, 75, 145, 0.45)',
+                border: '2.5px solid rgba(255, 255, 255, 0.85)',
+                borderRadius: '8px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                color: '#ffffff',
+                zIndex: 40,
+                overflow: 'hidden'
+              }}
+            >
+              <ContentPanel idx={activeIndex} isMobile={isMobile} />
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </div>
